@@ -21,18 +21,12 @@ public class ArrayStorage {
     }
 
     Resume get(String uuid) {
-
-        Resume getResume = null;
-
         for (Resume aStorage : storage){
-            getResume = aStorage;
-            if (getResume != null && getResume.uuid.equals(uuid)) {
-                getResume = aStorage;
-                break;
+            if (aStorage != null && aStorage.uuid.equals(uuid)) {
+                return aStorage;
             }
         }
-
-        return getResume;
+        return null;
     }
 
     void delete(String uuid) {
@@ -52,11 +46,8 @@ public class ArrayStorage {
      * @return array, contains only Resumes in storage (without null)
      */
     Resume[] getAll() {
-
         Resume[] getAllResume = new Resume[size()];
-
         System.arraycopy(storage, 0, getAllResume, 0, getAllResume.length);
-
         return getAllResume;
     }
 
