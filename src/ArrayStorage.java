@@ -4,17 +4,20 @@
 public class ArrayStorage {
 
     Resume[] storage = new Resume[10000];
+    int count = 0;
 
     void clear() {
         for (int i = 0; i < storage.length; i++){
             storage[i] = null;
         }
+        count = 0;
     }
 
     void save(Resume r) {
         for (int i = 0; i < storage.length; i++){
             if (storage[i] == null) {
                 storage[i] = r;
+                count++;
                 break;
             }
         }
@@ -33,6 +36,7 @@ public class ArrayStorage {
         for(int i = 0; i < storage.length; i++){
             if (storage[i] != null && storage[i].uuid.equals(uuid)){
                 storage[i] = null;
+                count--;
                 while (storage[i] == null && storage[i+1] != null && i <= storage.length - 1){
                     storage[i] = storage[i+1];
                     storage[i+1] = null;
@@ -46,19 +50,12 @@ public class ArrayStorage {
      * @return array, contains only Resumes in storage (without null)
      */
     Resume[] getAll() {
-        Resume[] getAllResume = new Resume[size()];
+        Resume[] getAllResume = new Resume[count];
         System.arraycopy(storage, 0, getAllResume, 0, getAllResume.length);
         return getAllResume;
     }
 
     int size() {
-
-        int count = 0;
-
-        for (Resume sizeStorage: storage){
-            if (sizeStorage != null) count++;
-        }
-
         return count;
     }
 }
