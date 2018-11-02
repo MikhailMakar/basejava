@@ -14,36 +14,46 @@ public class ArrayStorage {
     }
 
     public void save(Resume r) {
-        if (size >= 0 && size <= storage.length) {
-            if (checkResumeInStorage(r.getUuid()) >= 0) {
+        if (size <= storage.length) {
+            if (positionResumeInStorage(r.getUuid()) >= 0) {
                 System.out.println("Resume is already exist!");
             } else {
                 storage[size] = r;
                 size++;
             }
-        } else System.out.println("Storage is over!");
+        } else {
+            System.out.println("Storage is over!");
+        }
     }
 
     public void update(Resume r) {
-        if (checkResumeInStorage(r.getUuid()) >= 0) {
-            storage[checkResumeInStorage(r.getUuid())] = r;
-            System.out.println("Resume " + r.getUuid() + " updated!");
-        } else System.out.println("Resume aren't exist in the storage!");
+        int position = positionResumeInStorage(r.getUuid());
+        if (position >= 0) {
+            storage[position] = r;
+        } else {
+            System.out.println("Resume aren't exist in the storage!");
+        }
     }
 
     public Resume get(String uuid) {
-        if (checkResumeInStorage(uuid) >= 0) {
-            return storage[checkResumeInStorage(uuid)];
-        } else System.out.println("Resume aren't exist in the storage!");
+        int position = positionResumeInStorage(uuid);
+        if (position >= 0) {
+            return storage[position];
+        } else {
+            System.out.println("Resume aren't exist in the storage!");
+        }
         return null;
     }
 
     public void delete(String uuid) {
-        if (checkResumeInStorage(uuid) >= 0) {
-            storage[checkResumeInStorage(uuid)] = storage[size - 1];
+        int position = positionResumeInStorage(uuid);
+        if (position >= 0) {
+            storage[position] = storage[size - 1];
             storage[size - 1] = null;
             size--;
-        } else System.out.println("Resume aren't exist in the storage!");
+        } else {
+            System.out.println("Resume aren't exist in the storage!");
+        }
     }
 
     /**
@@ -59,7 +69,7 @@ public class ArrayStorage {
         return size;
     }
 
-    private int checkResumeInStorage(String uuid) {
+    private int positionResumeInStorage(String uuid) {
         for (int i = 0; i < size; i++) {
             if (storage[i].getUuid().equals(uuid)) {
                 return i;
