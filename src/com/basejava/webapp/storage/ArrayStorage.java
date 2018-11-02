@@ -1,9 +1,13 @@
+package com.basejava.webapp.storage;
+
+import com.basejava.webapp.model.Resume;
+
 /**
  * Array based storage for Resumes
  */
 public class ArrayStorage {
 
-    private Resume[] storage = new Resume[4];
+    private Resume[] storage = new Resume[10_000];
     private int size = 0;
 
     public void clear() {
