@@ -3,7 +3,7 @@
  */
 public class ArrayStorage {
 
-    private Resume[] storage = new Resume[10_000];
+    private Resume[] storage = new Resume[4];
     private int size = 0;
 
     public void clear() {
@@ -14,7 +14,7 @@ public class ArrayStorage {
     }
 
     public void save(Resume r) {
-        if (size <= storage.length) {
+        if (size < storage.length) {
             if (positionResumeInStorage(r.getUuid()) >= 0) {
                 System.out.println("Resume is already exist!");
             } else {
@@ -41,8 +41,8 @@ public class ArrayStorage {
             return storage[position];
         } else {
             System.out.println("Resume aren't exist in the storage!");
+            return null;
         }
-        return null;
     }
 
     public void delete(String uuid) {
