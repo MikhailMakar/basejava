@@ -9,11 +9,23 @@ import java.util.Arrays;
  */
 public class ArrayStorage extends AbstractArrayStorage {
 
+    @Override
     public void clear() {
         Arrays.fill(storage, 0, size, null);
         size = 0;
     }
 
+    @Override
+    public void update(Resume r) {
+        int index = getIndex(r.getUuid());
+        if (index >= 0) {
+            storage[index] = r;
+        } else {
+            System.out.println("Resume aren't exist in the storage!");
+        }
+    }
+
+    @Override
     public void save(Resume r) {
         if (size < STORAGE_LIMIT) {
             if (getIndex(r.getUuid()) >= 0) {
@@ -27,19 +39,11 @@ public class ArrayStorage extends AbstractArrayStorage {
         }
     }
 
-    public void update(Resume r) {
-        int position = getIndex(r.getUuid());
-        if (position >= 0) {
-            storage[position] = r;
-        } else {
-            System.out.println("Resume aren't exist in the storage!");
-        }
-    }
-
+    @Override
     public void delete(String uuid) {
-        int position = getIndex(uuid);
-        if (position >= 0) {
-            storage[position] = storage[size - 1];
+        int index = getIndex(uuid);
+        if (index >= 0) {
+            storage[index] = storage[size - 1];
             storage[size - 1] = null;
             size--;
         } else {
@@ -47,6 +51,7 @@ public class ArrayStorage extends AbstractArrayStorage {
         }
     }
 
+    @Override
     public Resume[] getAll() {
         return Arrays.copyOfRange(storage, 0, size);
     }
