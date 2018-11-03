@@ -2,23 +2,24 @@ package com.basejava.webapp.storage;
 
 import com.basejava.webapp.model.Resume;
 
+import java.util.Arrays;
+
 /**
  * Array based storage for Resumes
  */
-public class ArrayStorage {
+public class ArrayStorage implements Storage {
 
-    private Resume[] storage = new Resume[10_000];
+    private static final int STORAGE_LIMIT = 10000;
+    private Resume[] storage = new Resume[STORAGE_LIMIT];
     private int size = 0;
 
     public void clear() {
-        for (int i = 0; i < size; i++) {
-            storage[i] = null;
-        }
+        Arrays.fill(storage, 0, size, null);
         size = 0;
     }
 
     public void save(Resume r) {
-        if (size < storage.length) {
+        if (size < STORAGE_LIMIT) {
             if (positionResumeInStorage(r.getUuid()) >= 0) {
                 System.out.println("Resume is already exist!");
             } else {
@@ -64,9 +65,7 @@ public class ArrayStorage {
      * @return array, contains only Resumes in storage (without null)
      */
     public Resume[] getAll() {
-        Resume[] getAllResume = new Resume[size];
-        System.arraycopy(storage, 0, getAllResume, 0, size);
-        return getAllResume;
+        return Arrays.copyOfRange(storage, 0, size);
     }
 
     public int size() {
