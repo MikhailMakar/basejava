@@ -39,6 +39,7 @@ public abstract class AbstractArrayStorage implements Storage {
                 System.out.println("Resume is already exist!");
             } else {
                 saveElement(r, index);
+                size++;
             }
         } else {
             System.out.println("Storage is over!");

@@ -23,6 +23,5 @@ public class SortedArrayStorage extends AbstractArrayStorage {
         int insertionIndex = -(index + 1);
         System.arraycopy(storage, insertionIndex, storage, insertionIndex + 1, size - insertionIndex);
         storage[insertionIndex] = r;
-        size++;
     }
 }
