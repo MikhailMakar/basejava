@@ -5,7 +5,7 @@ import com.basejava.webapp.model.Resume;
 import java.util.Arrays;
 
 public abstract class AbstractArrayStorage implements Storage {
-    protected static final int STORAGE_LIMIT = 10000;
+    protected static final int STORAGE_LIMIT = 10_000;
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int size = 0;
 
@@ -13,7 +13,7 @@ public abstract class AbstractArrayStorage implements Storage {
 
     protected abstract void deleteElementFromStorage(int index);
 
-    protected abstract void saveElement(Resume r);
+    protected abstract void saveElement(Resume r, int index);
 
     @Override
     public void clear() {
@@ -33,8 +33,13 @@ public abstract class AbstractArrayStorage implements Storage {
 
     @Override
     public void save(Resume r) {
+        int index = getIndex(r.getUuid());
         if (size < STORAGE_LIMIT) {
-            saveElement(r);
+            if (index >= 0) {
+                System.out.println("Resume is already exist!");
+            } else {
+                saveElement(r, index);
+            }
         } else {
             System.out.println("Storage is over!");
         }

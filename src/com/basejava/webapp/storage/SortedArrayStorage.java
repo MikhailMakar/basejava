@@ -15,19 +15,15 @@ public class SortedArrayStorage extends AbstractArrayStorage {
 
     @Override
     protected void deleteElementFromStorage(int index) {
-        System.arraycopy(storage, index + 1, storage, index, size - 1);
+        System.arraycopy(storage, index + 1, storage, index, size - index - 1);
         size--;
     }
 
     @Override
-    protected void saveElement(Resume r) {
-        if (getIndex(r.getUuid()) >= 0) {
-            System.out.println("Resume is already exist!");
-        } else {
-            int index = -(getIndex(r.getUuid()) + 1);
-            System.arraycopy(storage, index, storage, index + 1, size + 1);
-            storage[index] = r;
-            size++;
-        }
+    protected void saveElement(Resume r, int index) {
+        int insertionIndex = -(index + 1);
+        System.arraycopy(storage, insertionIndex, storage, insertionIndex + 1, size - insertionIndex);
+        storage[insertionIndex] = r;
+        size++;
     }
 }

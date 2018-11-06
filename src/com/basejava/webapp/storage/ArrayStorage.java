@@ -25,12 +25,8 @@ public class ArrayStorage extends AbstractArrayStorage {
     }
 
     @Override
-    protected void saveElement(Resume r) {
-        if (getIndex(r.getUuid()) >= 0) {
-            System.out.println("Resume is already exist!");
-        } else {
-            storage[size] = r;
-            size++;
-        }
+    protected void saveElement(Resume r, int index) {
+        storage[size] = r;
+        size++;
     }
 }
