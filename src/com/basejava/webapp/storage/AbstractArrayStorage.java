@@ -11,7 +11,7 @@ public abstract class AbstractArrayStorage implements Storage {
 
     protected abstract int getIndex(String uuid);
 
-    protected abstract void deleteElementFromStorage(int index);
+    protected abstract void deleteElement(int index);
 
     protected abstract void saveElement(Resume r, int index);
 
@@ -59,7 +59,9 @@ public abstract class AbstractArrayStorage implements Storage {
     public void delete(String uuid) {
         int index = getIndex(uuid);
         if (index >= 0) {
-            deleteElementFromStorage(index);
+            deleteElement(index);
+            storage[size - 1] = null;
+            size--;
         } else {
             System.out.println("Resume aren't exist in the storage!");
         }
