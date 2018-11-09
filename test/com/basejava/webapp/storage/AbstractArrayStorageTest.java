@@ -17,7 +17,8 @@ public class AbstractArrayStorageTest {
     private static final String UUID_1 = "uuid1";
     private static final String UUID_2 = "uuid2";
     private static final String UUID_3 = "uuid3";
-    private static final Resume DUMMY = new Resume("dummy");
+    private static final String DUMMY = "dummy";
+    private static final Resume R_DUMMY = new Resume(DUMMY);
 
     protected AbstractArrayStorageTest(Storage storage) {
         this.storage = storage;
@@ -51,7 +52,7 @@ public class AbstractArrayStorageTest {
 
     @Test(expected = NotExistStorageException.class)
     public void updateNotExist() throws Exception {
-        storage.update(DUMMY);
+        storage.update(R_DUMMY);
     }
 
     @Test
@@ -68,10 +69,10 @@ public class AbstractArrayStorageTest {
             for (int i = storage.size(); i < AbstractArrayStorage.STORAGE_LIMIT; i++) {
                 storage.save(new Resume("uuid" + (i + 1)));
             }
-        } catch (Exception e) {
+        } catch (StorageException  e) {
             Assert.fail("There is no mistake, just storage is not over!");
         }
-        storage.save(DUMMY);
+        storage.save(R_DUMMY);
     }
 
     @Test(expected = ExistStorageException.class)
@@ -87,7 +88,7 @@ public class AbstractArrayStorageTest {
 
     @Test(expected = NotExistStorageException.class)
     public void getNotExist() {
-        storage.get(DUMMY.getUuid());
+        storage.get(DUMMY);
     }
 
     @Test(expected = NotExistStorageException.class)
@@ -99,16 +100,17 @@ public class AbstractArrayStorageTest {
 
     @Test(expected = NotExistStorageException.class)
     public void deleteNotExist() throws Exception {
-        storage.delete(DUMMY.getUuid());
+        storage.delete(DUMMY);
     }
 
     @Test
     public void getAll() throws Exception {
         Resume[] resumes = new Resume[3];
+        Resume[] resumes1 = storage.getAll();
         resumes[0] = new Resume("uuid1");
         resumes[1] = new Resume("uuid2");
         resumes[2] = new Resume("uuid3");
-        assertArrayEquals(resumes, storage.getAll());
-        Assert.assertEquals(resumes.length, storage.size());
+        assertArrayEquals(resumes, resumes1);
+        Assert.assertEquals(resumes.length, resumes1.length);
     }
 }
