@@ -2,10 +2,17 @@ package com.basejava.webapp.storage;
 
 import com.basejava.webapp.model.Resume;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class ListStorage extends AbstractStorage {
+
+    private List<Resume> listResume = new LinkedList<>();
+    private int listSize = listResume.size();
+
     @Override
     public void clear() {
-
+        listResume.clear();
     }
 
     @Override
@@ -30,11 +37,11 @@ public class ListStorage extends AbstractStorage {
 
     @Override
     public Resume[] getAll() {
-        return new Resume[0];
+        return (Resume[]) listResume.toArray();
     }
 
     @Override
     public int size() {
-        return 0;
+        return listSize;
     }
 }
