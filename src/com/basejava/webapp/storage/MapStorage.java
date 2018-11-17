@@ -31,7 +31,7 @@ public class MapStorage extends AbstractStorage {
     @Override
     public void save(Resume r) {
         String id = r.getUuid();
-        if (mapSize < STORAGE_LIMIT) {
+        if (mapSize < 100) {
             if (id != null) {
                 for (String uuid : mapResume.keySet()) {
                     if (id.equals(uuid)) {

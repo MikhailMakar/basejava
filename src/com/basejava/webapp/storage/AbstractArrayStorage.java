@@ -5,13 +5,25 @@ import com.basejava.webapp.exception.NotExistStorageException;
 import com.basejava.webapp.exception.StorageException;
 import com.basejava.webapp.model.Resume;
 
+import java.util.Arrays;
+
 public abstract class AbstractArrayStorage extends AbstractStorage {
+
+    protected static final int STORAGE_LIMIT = 10_000;
+    protected Resume[] storage = new Resume[STORAGE_LIMIT];
+    protected int size = 0;
 
     protected abstract int getIndex(String uuid);
 
     protected abstract void fillDeletedElement(int index);
 
     protected abstract void insertElement(Resume r, int index);
+
+    @Override
+    public void clear() {
+        Arrays.fill(storage, 0, size, null);
+        size = 0;
+    }
 
     @Override
     public void update(Resume r) {
@@ -57,5 +69,15 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         } else {
             throw new NotExistStorageException(uuid);
         }
+    }
+
+    @Override
+    public Resume[] getAll() {
+        return Arrays.copyOfRange(storage, 0, size);
+    }
+
+    @Override
+    public int size() {
+        return size;
     }
 }
