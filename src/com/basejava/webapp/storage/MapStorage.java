@@ -2,15 +2,9 @@ package com.basejava.webapp.storage;
 
 import com.basejava.webapp.exception.ExistStorageException;
 import com.basejava.webapp.exception.NotExistStorageException;
-import com.basejava.webapp.exception.StorageException;
 import com.basejava.webapp.model.Resume;
 
-import java.util.HashMap;
-
 public class MapStorage extends AbstractStorage {
-
-    private HashMap<String, Resume> mapResume = new HashMap<>();
-    private int mapSize = mapResume.size();
 
     @Override
     public void clear() {
@@ -19,31 +13,17 @@ public class MapStorage extends AbstractStorage {
 
     @Override
     public void update(Resume r) {
-        if (r != null && r.getUuid() != null) {
-            if (mapResume.put(r.getUuid(), r) == null && mapSize > 1) {
-                throw new NotExistStorageException(r.getUuid());
-            }
-        } else {
-            throw new NullPointerException("Key or Value equal null!");
+        String id = r.getUuid();
+        if (mapResume.putIfAbsent(id, r) == null) {
+            throw new NotExistStorageException(id);
         }
     }
 
     @Override
     public void save(Resume r) {
         String id = r.getUuid();
-        if (mapSize < 100) {
-            if (id != null) {
-                for (String uuid : mapResume.keySet()) {
-                    if (id.equals(uuid)) {
-                        throw new ExistStorageException(id);
-                    }
-                }
-                mapResume.put(id, r);
-            } else {
-                throw new NullPointerException("Key equals null!");
-            }
-        } else {
-            throw new StorageException("Storage overflow", id);
+        if (!(mapResume.putIfAbsent(id, r) == null)) {
+            throw new ExistStorageException(id);
         }
     }
 
@@ -58,12 +38,8 @@ public class MapStorage extends AbstractStorage {
 
     @Override
     public void delete(String uuid) {
-        for (String id : mapResume.keySet()) {
-            if (uuid.equals(id)) {
-                mapResume.remove(uuid);
-            } else {
-                throw new NotExistStorageException(uuid);
-            }
+        if (mapResume.remove(uuid) == null) {
+            throw new NotExistStorageException(uuid);
         }
     }
 
@@ -74,6 +50,6 @@ public class MapStorage extends AbstractStorage {
 
     @Override
     public int size() {
-        return mapSize;
+        return mapResume.size();
     }
 }
