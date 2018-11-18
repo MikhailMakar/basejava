@@ -21,9 +21,9 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
 
     @Override
     public void update(Resume r) {
-        int index = getIndex(r.getUuid());
+        Object index = getSearchKey(r.getUuid());
         if (checkIndex(index)) {
-            storage[index] = r;
+            storage[((int) index)] = r;
         } else {
             throw new NotExistStorageException(r.getUuid());
         }
@@ -31,7 +31,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
 
     @Override
     public void save(Resume r) {
-        int index = getIndex(r.getUuid());
+        Object index = getSearchKey(r.getUuid());
         if (size < STORAGE_LIMIT) {
             if (checkIndex(index)) {
                 throw new ExistStorageException(r.getUuid());
@@ -46,7 +46,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
 
     @Override
     public Resume get(String uuid) {
-        int index = getIndex(uuid);
+        Object index = getSearchKey(uuid);
         if (!checkIndex(index)) {
             throw new NotExistStorageException(uuid);
         }
@@ -55,7 +55,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
 
     @Override
     public void delete(String uuid) {
-        int index = getIndex(uuid);
+        Object index = getSearchKey(uuid);
         if (checkIndex(index)) {
             fillDeletedElement(index);
             storage[size - 1] = null;
@@ -76,12 +76,12 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    protected boolean checkIndex(int index) {
-        return index >= 0;
+    protected boolean checkIndex(Object index) {
+        return ((int) index) >= 0;
     }
 
     @Override
-    protected Resume doGet(int index) {
-        return storage[index];
+    protected Resume doGet(Object index) {
+        return storage[(int) index];
     }
 }

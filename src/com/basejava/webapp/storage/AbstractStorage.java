@@ -6,20 +6,20 @@ import com.basejava.webapp.model.Resume;
 
 public abstract class AbstractStorage implements Storage {
 
-    protected abstract int getIndex(String uuid);
+    protected abstract Object getSearchKey(String uuid);
 
-    protected abstract Resume doGet(int index);
+    protected abstract Resume doGet(Object index);
 
-    protected abstract boolean checkIndex(int index);
+    protected abstract boolean checkIndex(Object index);
 
-    protected abstract void fillDeletedElement(int index);
+    protected abstract void fillDeletedElement(Object index);
 
-    protected abstract void insertElement(Resume r, int index);
+    protected abstract void insertElement(Resume r, Object index);
 
     @Override
     public void update(Resume r) {
         String id = r.getUuid();
-        int index = getIndex(id);
+        Object index = getSearchKey(id);
         if (checkIndex(index)) {
             throw new NotExistStorageException(id);
         } else {
@@ -30,7 +30,7 @@ public abstract class AbstractStorage implements Storage {
     @Override
     public void save(Resume r) {
         String id = r.getUuid();
-        int index = getIndex(id);
+        Object index = getSearchKey(id);
         if (checkIndex(index)) {
             insertElement(r, index);
         } else {
@@ -40,7 +40,7 @@ public abstract class AbstractStorage implements Storage {
 
     @Override
     public Resume get(String uuid) {
-        int index = getIndex(uuid);
+        Object index = getSearchKey(uuid);
         if (checkIndex(index)) {
             throw new NotExistStorageException(uuid);
         } else {
@@ -50,7 +50,7 @@ public abstract class AbstractStorage implements Storage {
 
     @Override
     public void delete(String uuid) {
-        int index = getIndex(uuid);
+        Object index = getSearchKey(uuid);
         if (checkIndex(index)) {
             throw new NotExistStorageException(uuid);
         } else {

@@ -10,28 +10,28 @@ public class MapStorage extends AbstractStorage {
     private Map<String, Resume> mapResume = new HashMap<>();
 
     @Override
-    protected int getIndex(String uuid) {
-        return uuid.hashCode();
+    protected Object getSearchKey(String uuid) {
+        return uuid;
     }
 
     @Override
-    protected Resume doGet(int index) {
-        return mapResume.get(getKey(index));
+    protected Resume doGet(Object index) {
+        return mapResume.get(index);
     }
 
     @Override
-    protected boolean checkIndex(int index) {
-        return !(mapResume.containsKey(getKey(index)));
+    protected boolean checkIndex(Object index) {
+        return !(mapResume.containsKey(index));
     }
 
     @Override
-    protected void fillDeletedElement(int index) {
-        mapResume.remove(getKey(index));
+    protected void fillDeletedElement(Object index) {
+        mapResume.remove(index);
     }
 
     @Override
-    protected void insertElement(Resume r, int index) {
-        mapResume.put(getKey(index), r);
+    protected void insertElement(Resume r, Object index) {
+        mapResume.put((String) index, r);
     }
 
     @Override
@@ -47,16 +47,5 @@ public class MapStorage extends AbstractStorage {
     @Override
     public int size() {
         return mapResume.size();
-    }
-
-    private String getKey(int index) {
-        String key = null;
-        for (Map.Entry entry : mapResume.entrySet()) {
-            Object gKey = entry.getKey();
-            if (gKey.hashCode() == index) {
-                key = (String) gKey;
-            }
-        }
-        return key;
     }
 }
