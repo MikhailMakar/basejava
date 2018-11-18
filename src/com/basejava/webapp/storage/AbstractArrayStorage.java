@@ -13,12 +13,6 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int size = 0;
 
-    protected abstract int getIndex(String uuid);
-
-    protected abstract void fillDeletedElement(int index);
-
-    protected abstract void insertElement(Resume r, int index);
-
     @Override
     public void clear() {
         Arrays.fill(storage, 0, size, null);
@@ -28,7 +22,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     @Override
     public void update(Resume r) {
         int index = getIndex(r.getUuid());
-        if (index >= 0) {
+        if (checkIndex(index)) {
             storage[index] = r;
         } else {
             throw new NotExistStorageException(r.getUuid());
@@ -39,7 +33,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     public void save(Resume r) {
         int index = getIndex(r.getUuid());
         if (size < STORAGE_LIMIT) {
-            if (index >= 0) {
+            if (checkIndex(index)) {
                 throw new ExistStorageException(r.getUuid());
             } else {
                 insertElement(r, index);
@@ -53,16 +47,16 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     @Override
     public Resume get(String uuid) {
         int index = getIndex(uuid);
-        if (index < 0) {
+        if (!checkIndex(index)) {
             throw new NotExistStorageException(uuid);
         }
-        return storage[index];
+        return doGet(index);
     }
 
     @Override
     public void delete(String uuid) {
         int index = getIndex(uuid);
-        if (index >= 0) {
+        if (checkIndex(index)) {
             fillDeletedElement(index);
             storage[size - 1] = null;
             size--;
@@ -79,5 +73,15 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     @Override
     public int size() {
         return size;
+    }
+
+    @Override
+    protected boolean checkIndex(int index) {
+        return index >= 0;
+    }
+
+    @Override
+    protected Resume doGet(int index) {
+        return storage[index];
     }
 }
