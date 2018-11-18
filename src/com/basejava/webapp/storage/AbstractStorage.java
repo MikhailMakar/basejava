@@ -20,7 +20,7 @@ public abstract class AbstractStorage implements Storage {
     public void update(Resume r) {
         String id = r.getUuid();
         Object index = getSearchKey(id);
-        if (checkIndex(index)) {
+        if (!checkIndex(index)) {
             throw new NotExistStorageException(id);
         } else {
             insertElement(r, index);
@@ -31,7 +31,7 @@ public abstract class AbstractStorage implements Storage {
     public void save(Resume r) {
         String id = r.getUuid();
         Object index = getSearchKey(id);
-        if (checkIndex(index)) {
+        if (!checkIndex(index)) {
             insertElement(r, index);
         } else {
             throw new ExistStorageException(id);
@@ -41,7 +41,7 @@ public abstract class AbstractStorage implements Storage {
     @Override
     public Resume get(String uuid) {
         Object index = getSearchKey(uuid);
-        if (checkIndex(index)) {
+        if (!checkIndex(index)) {
             throw new NotExistStorageException(uuid);
         } else {
             return doGet(index);
@@ -51,7 +51,7 @@ public abstract class AbstractStorage implements Storage {
     @Override
     public void delete(String uuid) {
         Object index = getSearchKey(uuid);
-        if (checkIndex(index)) {
+        if (!checkIndex(index)) {
             throw new NotExistStorageException(uuid);
         } else {
             fillDeletedElement(index);

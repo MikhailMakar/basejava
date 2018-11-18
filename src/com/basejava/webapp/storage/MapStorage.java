@@ -21,7 +21,7 @@ public class MapStorage extends AbstractStorage {
 
     @Override
     protected boolean checkIndex(Object index) {
-        return !(mapResume.containsKey(index));
+        return mapResume.containsKey(index);
     }
 
     @Override

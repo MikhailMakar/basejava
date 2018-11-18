@@ -45,15 +45,6 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    public Resume get(String uuid) {
-        Object index = getSearchKey(uuid);
-        if (!checkIndex(index)) {
-            throw new NotExistStorageException(uuid);
-        }
-        return doGet(index);
-    }
-
-    @Override
     public void delete(String uuid) {
         Object index = getSearchKey(uuid);
         if (checkIndex(index)) {

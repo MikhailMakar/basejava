@@ -26,7 +26,7 @@ public class ListStorage extends AbstractStorage {
 
     @Override
     protected boolean checkIndex(Object index) {
-        return ((int) index) < 0;
+        return ((int) index) >= 0;
     }
 
     @Override
