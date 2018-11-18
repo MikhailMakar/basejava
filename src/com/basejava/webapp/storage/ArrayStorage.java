@@ -27,6 +27,15 @@ public class ArrayStorage extends AbstractArrayStorage {
 
     @Override
     protected void insertElement(Resume r, Object index) {
+        if (checkIndex(index)) {
+            storage[((int) index)] = r;
+        } else {
+            saveElement(r, index);
+        }
+    }
+
+    @Override
+    protected void saveElement(Resume r, Object index) {
         if (size < STORAGE_LIMIT) {
             storage[size] = r;
             size++;
