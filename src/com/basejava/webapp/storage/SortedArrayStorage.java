@@ -1,6 +1,5 @@
 package com.basejava.webapp.storage;
 
-import com.basejava.webapp.exception.StorageException;
 import com.basejava.webapp.model.Resume;
 
 import java.util.Arrays;
@@ -16,28 +15,12 @@ public class SortedArrayStorage extends AbstractArrayStorage {
     @Override
     protected void fillDeletedElement(Object index) {
         System.arraycopy(storage, ((int) index) + 1, storage, (int) index, size - ((int) index) - 1);
-        storage[size - 1] = null;
-        size--;
     }
 
     @Override
     protected void insertElement(Resume r, Object index) {
-        if (checkIndex(index)) {
-            storage[((int) index)] = r;
-        } else {
-            saveElement(r, index);
-        }
-    }
-
-    @Override
-    protected void saveElement(Resume r, Object index) {
-        if (size < STORAGE_LIMIT) {
-            int insertionIndex = -(((int) index) + 1);
-            System.arraycopy(storage, insertionIndex, storage, insertionIndex + 1, size - insertionIndex);
-            storage[insertionIndex] = r;
-            size++;
-        } else {
-            throw new StorageException("Storage overflow", r.getUuid());
-        }
+        int insertionIndex = -(((int) index) + 1);
+        System.arraycopy(storage, insertionIndex, storage, insertionIndex + 1, size - insertionIndex);
+        storage[insertionIndex] = r;
     }
 }
