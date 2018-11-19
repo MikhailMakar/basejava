@@ -1,7 +1,5 @@
 package com.basejava.webapp.storage;
 
-import com.basejava.webapp.exception.ExistStorageException;
-import com.basejava.webapp.exception.NotExistStorageException;
 import com.basejava.webapp.exception.StorageException;
 import com.basejava.webapp.model.Resume;
 
@@ -17,43 +15,6 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     public void clear() {
         Arrays.fill(storage, 0, size, null);
         size = 0;
-    }
-
-    @Override
-    public void update(Resume r) {
-        Object index = getSearchKey(r.getUuid());
-        if (checkIndex(index)) {
-            storage[((int) index)] = r;
-        } else {
-            throw new NotExistStorageException(r.getUuid());
-        }
-    }
-
-    @Override
-    public void save(Resume r) {
-        Object index = getSearchKey(r.getUuid());
-        if (size < STORAGE_LIMIT) {
-            if (checkIndex(index)) {
-                throw new ExistStorageException(r.getUuid());
-            } else {
-                insertElement(r, index);
-                size++;
-            }
-        } else {
-            throw new StorageException("Storage overflow", r.getUuid());
-        }
-    }
-
-    @Override
-    public void delete(String uuid) {
-        Object index = getSearchKey(uuid);
-        if (checkIndex(index)) {
-            fillDeletedElement(index);
-            storage[size - 1] = null;
-            size--;
-        } else {
-            throw new NotExistStorageException(uuid);
-        }
     }
 
     @Override
@@ -74,5 +35,28 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     @Override
     protected Resume doGet(Object index) {
         return storage[(int) index];
+    }
+
+    @Override
+    protected void updateElement(Resume r, Object index) {
+        storage[((int) index)] = r;
+    }
+
+    @Override
+    protected void decreaseQuantity() {
+        storage[size - 1] = null;
+        size--;
+    }
+
+    @Override
+    protected void checkStorage(Resume r) {
+        if (!(size < STORAGE_LIMIT)) {
+            throw new StorageException("Storage overflow", r.getUuid());
+        }
+    }
+
+    @Override
+    protected void increaseQuantity() {
+        size++;
     }
 }

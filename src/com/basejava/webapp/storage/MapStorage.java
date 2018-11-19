@@ -35,6 +35,25 @@ public class MapStorage extends AbstractStorage {
     }
 
     @Override
+    protected void updateElement(Resume r, Object index) {
+        mapResume.put((String) index, r);
+    }
+
+    @Override
+    protected void decreaseQuantity() {
+    }
+
+    @Override
+    protected void increaseQuantity() {
+
+    }
+
+    @Override
+    protected void checkStorage(Resume r) {
+
+    }
+
+    @Override
     public void clear() {
         mapResume.clear();
     }
