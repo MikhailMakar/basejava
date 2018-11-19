@@ -30,31 +30,18 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected void fillDeletedElement(Object index) {
+    protected void doDelete(Object index) {
         listResume.remove(((int) index));
     }
 
     @Override
-    protected void insertElement(Resume r, Object index) {
+    protected void doSave(Resume r, Object index) {
         listResume.add(r);
     }
 
     @Override
     protected void updateElement(Resume r, Object index) {
         listResume.add(((int) index), r);
-    }
-
-    @Override
-    protected void decreaseQuantity() {
-    }
-
-    @Override
-    protected void increaseQuantity() {
-
-    }
-
-    @Override
-    protected void checkStorage(Resume r) {
     }
 
     @Override

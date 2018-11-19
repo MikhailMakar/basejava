@@ -12,17 +12,11 @@ public abstract class AbstractStorage implements Storage {
 
     protected abstract boolean checkIndex(Object index);
 
-    protected abstract void fillDeletedElement(Object index);
-
-    protected abstract void insertElement(Resume r, Object index);
-
     protected abstract void updateElement(Resume r, Object index);
 
-    protected abstract void decreaseQuantity();
+    protected abstract void doSave(Resume r, Object index);
 
-    protected abstract void increaseQuantity();
-
-    protected abstract void checkStorage(Resume r);
+    protected abstract void doDelete(Object index);
 
     @Override
     public void update(Resume r) {
@@ -39,10 +33,8 @@ public abstract class AbstractStorage implements Storage {
     public void save(Resume r) {
         String id = r.getUuid();
         Object index = getSearchKey(id);
-        checkStorage(r);
         if (!checkIndex(index)) {
-            insertElement(r, index);
-            increaseQuantity();
+            doSave(r, index);
         } else {
             throw new ExistStorageException(id);
         }
@@ -64,8 +56,7 @@ public abstract class AbstractStorage implements Storage {
         if (!checkIndex(index)) {
             throw new NotExistStorageException(uuid);
         } else {
-            fillDeletedElement(index);
-            decreaseQuantity();
+            doDelete(index);
         }
     }
 }
