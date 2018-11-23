@@ -5,7 +5,7 @@ import com.basejava.webapp.model.Resume;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MapStorage extends AbstractStorage {
+public class MapUuidStorage extends AbstractStorage {
 
     private Map<String, Resume> mapResume = new HashMap<>();
 
@@ -15,13 +15,18 @@ public class MapStorage extends AbstractStorage {
     }
 
     @Override
-    protected Resume doGet(Object index) {
-        return mapResume.get(index);
+    protected void doUpdate(Resume r, Object searchKey) {
+        mapResume.put((String) searchKey, r);
     }
 
     @Override
-    protected boolean checkIndex(Object index) {
-        return mapResume.containsKey(index);
+    protected boolean isExist(Object searchKey) {
+        return mapResume.containsKey(searchKey);
+    }
+
+    @Override
+    protected Resume doGet(Object index) {
+        return mapResume.get(index);
     }
 
     @Override
@@ -31,11 +36,6 @@ public class MapStorage extends AbstractStorage {
 
     @Override
     protected void doSave(Resume r, Object index) {
-        mapResume.put((String) index, r);
-    }
-
-    @Override
-    protected void updateElement(Resume r, Object index) {
         mapResume.put((String) index, r);
     }
 

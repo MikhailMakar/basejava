@@ -2,7 +2,7 @@ package com.basejava.webapp.storage;
 
 import org.junit.Test;
 
-public class MapStorageTest {
+public class MapUuidStorageTest {
 
     @Test
     public void clear() {
