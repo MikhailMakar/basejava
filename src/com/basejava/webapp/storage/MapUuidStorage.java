@@ -2,12 +2,13 @@ package com.basejava.webapp.storage;
 
 import com.basejava.webapp.model.Resume;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class MapUuidStorage extends AbstractStorage {
 
     private Map<String, Resume> mapResume = new HashMap<>();
+
+    private static final Comparator<Resume> RESUME_COMPARATOR = Comparator.comparing(Resume::getUuid);
 
     @Override
     protected Object getSearchKey(String uuid) {
@@ -45,8 +46,10 @@ public class MapUuidStorage extends AbstractStorage {
     }
 
     @Override
-    public Resume[] getAll() {
-        return (Resume[]) mapResume.values().toArray();
+    public List<Resume> getAllSorted() {
+        Resume[] resumes = mapResume.values().toArray(new Resume[mapResume.size()]);
+        Arrays.sort(resumes, RESUME_COMPARATOR);
+        return Arrays.asList(resumes);
     }
 
     @Override
