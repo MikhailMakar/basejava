@@ -6,6 +6,7 @@ import com.basejava.webapp.model.Resume;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static junit.framework.TestCase.assertTrue;
@@ -75,9 +76,7 @@ public class AbstractStorageTest {
     public void getAllSorted() throws Exception {
         List<Resume> array = storage.getAllSorted();
         assertEquals(3, array.size());
-        assertEquals(RESUME_1, array.get(0));
-        assertEquals(RESUME_2, array.get(1));
-        assertEquals(RESUME_3, array.get(2));
+        assertEquals(array, Arrays.asList(RESUME_1, RESUME_2, RESUME_3));
     }
 
     @Test

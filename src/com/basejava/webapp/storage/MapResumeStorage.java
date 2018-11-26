@@ -2,9 +2,7 @@ package com.basejava.webapp.storage;
 
 import com.basejava.webapp.model.Resume;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class MapResumeStorage extends AbstractStorage {
@@ -23,7 +21,7 @@ public class MapResumeStorage extends AbstractStorage {
 
     @Override
     protected boolean isExist(Object searchKey) {
-        return mapResume.containsValue(searchKey);
+        return searchKey != null;
     }
 
     @Override
@@ -43,15 +41,13 @@ public class MapResumeStorage extends AbstractStorage {
     }
 
     @Override
-    public void clear() {
-        mapResume.clear();
+    protected Resume[] getAll() {
+        return mapResume.values().toArray(new Resume[mapResume.size()]);
     }
 
     @Override
-    public List<Resume> getAllSorted() {
-        Resume[] resumes = mapResume.values().toArray(new Resume[mapResume.size()]);
-        Arrays.sort(resumes);
-        return Arrays.asList(resumes);
+    public void clear() {
+        mapResume.clear();
     }
 
     @Override
