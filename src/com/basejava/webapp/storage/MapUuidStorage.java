@@ -2,7 +2,9 @@ package com.basejava.webapp.storage;
 
 import com.basejava.webapp.model.Resume;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class MapUuidStorage extends AbstractStorage {
@@ -21,22 +23,22 @@ public class MapUuidStorage extends AbstractStorage {
 
     @Override
     protected boolean isExist(Object searchKey) {
-        return mapResume.containsKey(searchKey);
+        return mapResume.containsKey((String) searchKey);
     }
 
     @Override
     protected Resume doGet(Object index) {
-        return mapResume.get(index);
+        return mapResume.get((String) index);
     }
 
     @Override
     protected void doDelete(Object index) {
-        mapResume.remove(index);
+        mapResume.remove((String) index);
     }
 
     @Override
-    protected Resume[] getAll() {
-        return  mapResume.values().toArray(new Resume[mapResume.size()]);
+    protected List<Resume> doCopyAll() {
+        return new ArrayList<>(mapResume.values());
     }
 
     @Override
