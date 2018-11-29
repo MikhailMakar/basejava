@@ -1,5 +1,7 @@
 package com.basejava.webapp.model;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -12,6 +14,10 @@ public class Resume implements Comparable<Resume> {
     private final String uuid;
 
     private final String fullName;
+
+    private final Map<ContactType, String> contacts = new HashMap<>();
+
+    private final Map<SectionType, UserInformation> sections = new HashMap<>();
 
     public Resume(String fullName) {
         this(UUID.randomUUID().toString(), fullName);
@@ -28,6 +34,18 @@ public class Resume implements Comparable<Resume> {
         return uuid;
     }
 
+    public String getFullName() {
+        return fullName;
+    }
+
+    public String getContact(ContactType type) {
+        return contacts.get(type);
+    }
+
+    public UserInformation getSection(SectionType type) {
+        return sections.get(type);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -35,8 +53,7 @@ public class Resume implements Comparable<Resume> {
 
         Resume resume = (Resume) o;
 
-        if (!uuid.equals(resume.uuid)) return false;
-        return fullName.equals(resume.fullName);
+        return uuid.equals(resume.uuid) && fullName.equals(resume.fullName);
 
     }
 

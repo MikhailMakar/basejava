@@ -1,17 +1,21 @@
 package com.basejava.webapp;
 
+import com.basejava.webapp.model.ContactType;
 import com.basejava.webapp.model.SectionType;
 
 public class TestSingleton {
     private static TestSingleton instance;
+
     public static TestSingleton getInstance() {
         if (instance == null) {
             instance = new TestSingleton();
         }
         return instance;
     }
+
     private TestSingleton() {
     }
+
     public static void main(String[] args) {
         TestSingleton.getInstance().toString();
         Singleton instance = Singleton.valueOf("INSTANCE");
@@ -19,7 +23,11 @@ public class TestSingleton {
         for (SectionType type : SectionType.values()) {
             System.out.println(type.getTitle());
         }
+        for (ContactType type : ContactType.values()) {
+            System.out.println(type.getTitle());
+        }
     }
+
     public enum Singleton {
         INSTANCE
     }
