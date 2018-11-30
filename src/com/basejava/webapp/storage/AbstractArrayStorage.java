@@ -14,7 +14,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
 
     protected abstract void fillDeletedElement(int index);
 
-    protected abstract void insertElement(Resume r, int index);
+    protected abstract void insertElement(Resume resume, int index);
 
     protected abstract Integer getSearchKey(String uuid);
 
@@ -28,8 +28,8 @@ public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
     }
 
     @Override
-    protected void doUpdate(Resume r, Integer index) {
-        storage[ index] = r;
+    protected void doUpdate(Resume resume, Integer index) {
+        storage[ index] = resume;
     }
 
     @Override
@@ -38,11 +38,11 @@ public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
     }
 
     @Override
-    protected void doSave(Resume r, Integer index) {
+    protected void doSave(Resume resume, Integer index) {
         if (size == STORAGE_LIMIT) {
-            throw new StorageException("Storage overflow", r.getUuid());
+            throw new StorageException("Storage overflow", resume.getUuid());
         } else {
-            insertElement(r,  index);
+            insertElement(resume,  index);
             size++;
         }
     }

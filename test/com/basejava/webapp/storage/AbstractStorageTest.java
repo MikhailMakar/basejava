@@ -9,8 +9,8 @@ import org.junit.Test;
 import java.util.Arrays;
 import java.util.List;
 
-import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
 
 public class AbstractStorageTest {
     protected Storage storage;
@@ -20,21 +20,16 @@ public class AbstractStorageTest {
     private static final String UUID_3 = "uuid3";
     private static final String UUID_4 = "uuid4";
 
-    private static final String FULL_NAME_1 = "A";
-    private static final String FULL_NAME_2 = "B";
-    private static final String FULL_NAME_3 = "C";
-    private static final String FULL_NAME_4 = "D";
-
     private static final Resume RESUME_1;
     private static final Resume RESUME_2;
     private static final Resume RESUME_3;
     private static final Resume RESUME_4;
 
     static {
-        RESUME_1 = new Resume(UUID_1, FULL_NAME_1);
-        RESUME_2 = new Resume(UUID_2, FULL_NAME_2);
-        RESUME_3 = new Resume(UUID_3, FULL_NAME_3);
-        RESUME_4 = new Resume(UUID_4, FULL_NAME_4);
+        RESUME_1 = new Resume(UUID_1, "A");
+        RESUME_2 = new Resume(UUID_2, "B");
+        RESUME_3 = new Resume(UUID_3, "C");
+        RESUME_4 = new Resume(UUID_4, "D");
     }
 
     protected AbstractStorageTest(Storage storage) {
@@ -64,7 +59,7 @@ public class AbstractStorageTest {
     public void update() throws Exception {
         Resume newResume = new Resume(UUID_1, "New Name");
         storage.update(newResume);
-        assertTrue(newResume == storage.get(UUID_1));
+        assertSame(newResume, storage.get(UUID_1));
     }
 
     @Test(expected = NotExistStorageException.class)
@@ -76,7 +71,7 @@ public class AbstractStorageTest {
     public void getAllSorted() throws Exception {
         List<Resume> array = storage.getAllSorted();
         assertEquals(3, array.size());
-        assertEquals(array, Arrays.asList(RESUME_1, RESUME_2, RESUME_3));
+        assertEquals(Arrays.asList(RESUME_1, RESUME_2, RESUME_3), array);
     }
 
     @Test
@@ -115,8 +110,8 @@ public class AbstractStorageTest {
         storage.get("dummy");
     }
 
-    private void assertGet(Resume r) {
-        assertEquals(r, storage.get(r.getUuid()));
+    private void assertGet(Resume resume) {
+        assertEquals(resume, storage.get(resume.getUuid()));
     }
 
     private void assertSize(int size) {

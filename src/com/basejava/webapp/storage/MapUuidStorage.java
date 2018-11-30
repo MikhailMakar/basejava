@@ -17,23 +17,23 @@ public class MapUuidStorage extends AbstractStorage<String> {
     }
 
     @Override
-    protected void doUpdate(Resume r, String searchKey) {
-        mapResume.put( searchKey, r);
+    protected void doUpdate(Resume resume, String searchKey) {
+        mapResume.put(searchKey, resume);
     }
 
     @Override
     protected boolean isExist(String searchKey) {
-        return mapResume.containsKey( searchKey);
+        return mapResume.containsKey(searchKey);
     }
 
     @Override
     protected Resume doGet(String index) {
-        return mapResume.get( index);
+        return mapResume.get(index);
     }
 
     @Override
     protected void doDelete(String index) {
-        mapResume.remove( index);
+        mapResume.remove(index);
     }
 
     @Override
@@ -42,8 +42,8 @@ public class MapUuidStorage extends AbstractStorage<String> {
     }
 
     @Override
-    protected void doSave(Resume r, String index) {
-        mapResume.put( index, r);
+    protected void doSave(Resume resume, String index) {
+        mapResume.put(index, resume);
     }
 
     @Override
