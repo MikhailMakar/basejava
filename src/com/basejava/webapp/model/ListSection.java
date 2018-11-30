@@ -2,16 +2,16 @@ package com.basejava.webapp.model;
 
 import java.util.List;
 
-public class ListSection extends UserInformation {
+public class ListSection extends AbstractSection {
 
-    private final List<String> achievements;
+    private final List<String> skills;
 
     public ListSection(List<String> achievments) {
-        this.achievements = achievments;
+        this.skills = achievments;
     }
 
-    public List<String> getAchievements() {
-        return achievements;
+    public List<String> getSkills() {
+        return skills;
     }
 
     @Override
@@ -21,11 +21,11 @@ public class ListSection extends UserInformation {
 
         ListSection that = (ListSection) o;
 
-        return achievements != null ? achievements.equals(that.achievements) : that.achievements == null;
+        return skills != null ? skills.equals(that.skills) : that.skills == null;
     }
 
     @Override
     public int hashCode() {
-        return achievements != null ? achievements.hashCode() : 0;
+        return skills != null ? skills.hashCode() : 0;
     }
 }

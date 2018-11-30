@@ -2,7 +2,7 @@ package com.basejava.webapp.model;
 
 import java.util.List;
 
-public class CompaniesSection extends UserInformation {
+public class CompaniesSection extends AbstractSection {
 
     private final List<Company> list;
 

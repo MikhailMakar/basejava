@@ -1,6 +1,6 @@
 package com.basejava.webapp.model;
 
-public class TextSection extends UserInformation {
+public class TextSection extends AbstractSection {
 
     private final String information;
 

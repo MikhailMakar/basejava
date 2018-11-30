@@ -1,4 +1,4 @@
 package com.basejava.webapp.model;
 
-public abstract class UserInformation {
+public abstract class AbstractSection {
 }
