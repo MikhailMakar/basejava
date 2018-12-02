@@ -15,9 +15,8 @@ public class Resume implements Comparable<Resume> {
 
     private final String fullName;
 
-    private Map<ContactType, String> contacts = new EnumMap<>(ContactType.class);
-
-    private Map<SectionType, AbstractSection> sections = new EnumMap<>(SectionType.class);
+    private final Map<ContactType, String> contacts = new EnumMap<>(ContactType.class);
+    private final Map<SectionType, Section> sections = new EnumMap<>(SectionType.class);
 
     public Resume(String fullName) {
         this(UUID.randomUUID().toString(), fullName);
@@ -34,24 +33,12 @@ public class Resume implements Comparable<Resume> {
         return uuid;
     }
 
-    public String getFullName() {
-        return fullName;
-    }
-
     public String getContact(ContactType type) {
         return contacts.get(type);
     }
 
-    public AbstractSection getSection(SectionType type) {
+    public Section getSection(SectionType type) {
         return sections.get(type);
-    }
-
-    public void setContacts(Map<ContactType, String> contacts) {
-        this.contacts = contacts;
-    }
-
-    public void setSections(Map<SectionType, AbstractSection> sections) {
-        this.sections = sections;
     }
 
     @Override
@@ -61,18 +48,15 @@ public class Resume implements Comparable<Resume> {
 
         Resume resume = (Resume) o;
 
-        if (uuid != null ? !uuid.equals(resume.uuid) : resume.uuid != null) return false;
-        if (fullName != null ? !fullName.equals(resume.fullName) : resume.fullName != null) return false;
-        if (contacts != null ? !contacts.equals(resume.contacts) : resume.contacts != null) return false;
-        return sections != null ? sections.equals(resume.sections) : resume.sections == null;
+        if (!uuid.equals(resume.uuid)) return false;
+        return fullName.equals(resume.fullName);
+
     }
 
     @Override
     public int hashCode() {
-        int result = uuid != null ? uuid.hashCode() : 0;
-        result = 31 * result + (fullName != null ? fullName.hashCode() : 0);
-        result = 31 * result + (contacts != null ? contacts.hashCode() : 0);
-        result = 31 * result + (sections != null ? sections.hashCode() : 0);
+        int result = uuid.hashCode();
+        result = 31 * result + fullName.hashCode();
         return result;
     }
 

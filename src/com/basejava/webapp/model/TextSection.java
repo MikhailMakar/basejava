@@ -1,15 +1,22 @@
 package com.basejava.webapp.model;
 
-public class TextSection extends AbstractSection {
+import java.util.Objects;
 
-    private final String information;
+public class TextSection extends Section {
+    private final String content;
 
-    public TextSection(String information) {
-        this.information = information;
+    public TextSection(String content) {
+        Objects.requireNonNull(content, "content must not be null");
+        this.content = content;
     }
 
-    public String getInformation() {
-        return information;
+    public String getContent() {
+        return content;
+    }
+
+    @Override
+    public String toString() {
+        return content;
     }
 
     @Override
@@ -19,11 +26,12 @@ public class TextSection extends AbstractSection {
 
         TextSection that = (TextSection) o;
 
-        return information != null ? information.equals(that.information) : that.information == null;
+        return content.equals(that.content);
+
     }
 
     @Override
     public int hashCode() {
-        return information != null ? information.hashCode() : 0;
+        return content.hashCode();
     }
 }

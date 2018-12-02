@@ -1,17 +1,23 @@
 package com.basejava.webapp.model;
 
 import java.util.List;
+import java.util.Objects;
 
-public class ListSection extends AbstractSection {
+public class ListSection extends Section {
+    private final List<String> items;
 
-    private final List<String> skills;
-
-    public ListSection(List<String> achievments) {
-        this.skills = achievments;
+    public ListSection(List<String> items) {
+        Objects.requireNonNull(items, "items must not be null");
+        this.items = items;
     }
 
-    public List<String> getSkills() {
-        return skills;
+    public List<String> getItems() {
+        return items;
+    }
+
+    @Override
+    public String toString() {
+        return items.toString();
     }
 
     @Override
@@ -21,11 +27,12 @@ public class ListSection extends AbstractSection {
 
         ListSection that = (ListSection) o;
 
-        return skills != null ? skills.equals(that.skills) : that.skills == null;
+        return items.equals(that.items);
+
     }
 
     @Override
     public int hashCode() {
-        return skills != null ? skills.hashCode() : 0;
+        return items.hashCode();
     }
 }
