@@ -2,10 +2,11 @@ package com.basejava.webapp.storage;
 
 import com.basejava.webapp.exception.ExistStorageException;
 import com.basejava.webapp.exception.NotExistStorageException;
-import com.basejava.webapp.model.Resume;
+import com.basejava.webapp.model.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.time.Month;
 import java.util.Arrays;
 import java.util.List;
 
@@ -30,6 +31,23 @@ public class AbstractStorageTest {
         RESUME_2 = new Resume(UUID_2, "B");
         RESUME_3 = new Resume(UUID_3, "C");
         RESUME_4 = new Resume(UUID_4, "D");
+
+        RESUME_1.addContact(ContactType.MAIL, "gkislin@yandex.ru");
+        RESUME_1.addContact(ContactType.PHONE, "+7(921) 855-0482");
+        RESUME_1.addSection(SectionType.OBJECTIVE, new TextSection("Ведущий стажировок и корпоративного обучения по Java Web и Enterprise технологиям"));
+        RESUME_1.addSection(SectionType.PERSONAL, new TextSection("Аналитический склад ума, сильная логика, креативность, инициативность. Пурист кода и архитектуры."));
+        RESUME_1.addSection(SectionType.ACHIEVEMENT, new ListSection("С 2013 года: разработка проектов \"Разработка Web приложения\",\"Java Enterprise\", \"Многомодульный maven. Многопоточность. XML (JAXB/StAX). Веб сервисы (JAX-RS/SOAP). Удаленное взаимодействие (JMS/AKKA)\". Организация онлайн стажировок и ведение проектов. Более 1000 выпускников."));
+        RESUME_1.addSection(SectionType.QUALIFICATIONS, new ListSection("JEE AS: GlassFish (v2.1, v3), OC4J, JBoss, Tomcat, Jetty, WebLogic, WSO2", "MySQL", "SQLite" , "MS", "SQL", "HSQLDB"));
+        RESUME_1.addSection(SectionType.EXPERIENCE,
+                new OrganizationSection(
+                        new Organization("Oracle", "Oracle",
+                                new Organization.Position(1998, Month.JANUARY, "Middle Java", "DEVOPS"),
+                                new Organization.Position(1995, Month.AUGUST, 1998, Month.JANUARY, "Junior Java", "DEVOPS"))));
+        RESUME_1.addSection(SectionType.EDUCATION,
+                new OrganizationSection(
+                        new Organization("Итмо", "itmo.ru",
+                                new Organization.Position(1993, Month.SEPTEMBER, 1995, Month.JULY, "master", "Computer Programmer"),
+                                new Organization.Position(1989, Month.SEPTEMBER, 1993, Month.JULY, "bachelor", "Computer Programmer"))));
     }
 
     protected AbstractStorageTest(Storage storage) {
