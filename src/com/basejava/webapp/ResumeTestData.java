@@ -9,6 +9,22 @@ import java.util.Map;
 
 public class ResumeTestData {
 
+    public static Resume receiveResume(String uuid, String fullName, String email, String phone, String objective, String personal, String achievement, String qualifications, List<Organization> organizations, List<Organization> educationalOrganizations) {
+        Resume resume = new Resume(uuid, fullName);
+
+        resume.addContact(ContactType.MAIL, email);
+        resume.addContact(ContactType.PHONE, phone);
+        resume.addSection(SectionType.OBJECTIVE, new TextSection(objective));
+        resume.addSection(SectionType.PERSONAL, new TextSection(personal));
+        resume.addSection(SectionType.ACHIEVEMENT, new ListSection(achievement));
+        resume.addSection(SectionType.QUALIFICATIONS, new ListSection(qualifications));
+        resume.addSection(SectionType.EXPERIENCE,
+                new OrganizationSection(organizations));
+        resume.addSection(SectionType.EDUCATION,
+                new OrganizationSection(educationalOrganizations));
+        return resume;
+    }
+
     public static void main(String[] args) {
 
         Resume resume = new Resume("uid1", "Ivanov Ivan");

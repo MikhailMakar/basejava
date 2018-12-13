@@ -1,12 +1,13 @@
 package com.basejava.webapp.storage;
 
+import com.basejava.webapp.ResumeTestData;
 import com.basejava.webapp.exception.ExistStorageException;
 import com.basejava.webapp.exception.NotExistStorageException;
-import com.basejava.webapp.model.*;
+import com.basejava.webapp.model.Organization;
+import com.basejava.webapp.model.Resume;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.time.Month;
 import java.util.Arrays;
 import java.util.List;
 
@@ -27,27 +28,10 @@ public class AbstractStorageTest {
     private static final Resume RESUME_4;
 
     static {
-        RESUME_1 = new Resume(UUID_1, "A");
-        RESUME_2 = new Resume(UUID_2, "B");
-        RESUME_3 = new Resume(UUID_3, "C");
-        RESUME_4 = new Resume(UUID_4, "D");
-
-        RESUME_1.addContact(ContactType.MAIL, "gkislin@yandex.ru");
-        RESUME_1.addContact(ContactType.PHONE, "+7(921) 855-0482");
-        RESUME_1.addSection(SectionType.OBJECTIVE, new TextSection("Ведущий стажировок и корпоративного обучения по Java Web и Enterprise технологиям"));
-        RESUME_1.addSection(SectionType.PERSONAL, new TextSection("Аналитический склад ума, сильная логика, креативность, инициативность. Пурист кода и архитектуры."));
-        RESUME_1.addSection(SectionType.ACHIEVEMENT, new ListSection("С 2013 года: разработка проектов \"Разработка Web приложения\",\"Java Enterprise\", \"Многомодульный maven. Многопоточность. XML (JAXB/StAX). Веб сервисы (JAX-RS/SOAP). Удаленное взаимодействие (JMS/AKKA)\". Организация онлайн стажировок и ведение проектов. Более 1000 выпускников."));
-        RESUME_1.addSection(SectionType.QUALIFICATIONS, new ListSection("JEE AS: GlassFish (v2.1, v3), OC4J, JBoss, Tomcat, Jetty, WebLogic, WSO2", "MySQL", "SQLite" , "MS", "SQL", "HSQLDB"));
-        RESUME_1.addSection(SectionType.EXPERIENCE,
-                new OrganizationSection(
-                        new Organization("Oracle", "Oracle",
-                                new Organization.Position(1998, Month.JANUARY, "Middle Java", "DEVOPS"),
-                                new Organization.Position(1995, Month.AUGUST, 1998, Month.JANUARY, "Junior Java", "DEVOPS"))));
-        RESUME_1.addSection(SectionType.EDUCATION,
-                new OrganizationSection(
-                        new Organization("Итмо", "itmo.ru",
-                                new Organization.Position(1993, Month.SEPTEMBER, 1995, Month.JULY, "master", "Computer Programmer"),
-                                new Organization.Position(1989, Month.SEPTEMBER, 1993, Month.JULY, "bachelor", "Computer Programmer"))));
+        RESUME_1 = ResumeTestData.receiveResume(UUID_1, "A", "gkislin@yandex.ru", "+7(921) 855-0482", "objective", "personal", "achievement", "qualifications", Arrays.asList(new Organization("name", "url"), new Organization("name", "url")), Arrays.asList(new Organization("name", "url"), new Organization("name", "url")));
+        RESUME_2 = ResumeTestData.receiveResume(UUID_2, "B", "gkislin@yandex.ru", "+7(921) 855-0482", "objective", "personal", "achievement", "qualifications", Arrays.asList(new Organization("name", "url"), new Organization("name", "url")), Arrays.asList(new Organization("name", "url"), new Organization("name", "url")));
+        RESUME_3 = ResumeTestData.receiveResume(UUID_3, "C", "gkislin@yandex.ru", "+7(921) 855-0482", "objective", "personal", "achievement", "qualifications", Arrays.asList(new Organization("name", "url"), new Organization("name", "url")), Arrays.asList(new Organization("name", "url"), new Organization("name", "url")));
+        RESUME_4 = ResumeTestData.receiveResume(UUID_4, "D", "gkislin@yandex.ru", "+7(921) 855-0482", "objective", "personal", "achievement", "qualifications", Arrays.asList(new Organization("name", "url"), new Organization("name", "url")), Arrays.asList(new Organization("name", "url"), new Organization("name", "url")));
     }
 
     protected AbstractStorageTest(Storage storage) {
