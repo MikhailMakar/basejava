@@ -36,8 +36,12 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
 
     @Override
     public int size() {
-        return directory.list().length;
-
+        String[] lines = directory.list();
+        if (Objects.requireNonNull(lines) == null) {
+            throw new NullPointerException();
+        } else {
+            return lines.length;
+        }
     }
 
     @Override
@@ -84,7 +88,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     @Override
     protected List<Resume> doCopyAll() {
         File[] files = directory.listFiles();
-        List<Resume> list = new ArrayList<>(files.length);
+        List<Resume> list = new ArrayList<>(Objects.requireNonNull(files).length);
         for (File file : files) {
             list.add(doGet(file));
         }
