@@ -13,7 +13,7 @@ public class ResumeTestData {
 
         Resume resume = new Resume("uid1", "Ivanov Ivan");
         Map<ContactType, String> contacts = new EnumMap<>(ContactType.class);
-        Map<SectionType, Section> sections = new EnumMap<>(SectionType.class);
+        Map<SectionType, AbstractSection> sections = new EnumMap<>(SectionType.class);
         List<String> achievements = new ArrayList<>();
         List<String> qualifications = new ArrayList<>();
         List<Organization> companyList = new ArrayList<>();
