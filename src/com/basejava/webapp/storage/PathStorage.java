@@ -2,7 +2,7 @@ package com.basejava.webapp.storage;
 
 import com.basejava.webapp.exception.StorageException;
 import com.basejava.webapp.model.Resume;
-import com.basejava.webapp.storage.serializer.Serializer;
+import com.basejava.webapp.storage.serializer.StorageStrategy;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -17,9 +17,9 @@ import java.util.stream.Collectors;
 public class PathStorage extends AbstractStorage<Path> {
 
     private Path directory;
-    private Serializer strategy;
+    private StorageStrategy strategy;
 
-    protected PathStorage(String dir, Serializer strategy) {
+    protected PathStorage(String dir, StorageStrategy strategy) {
         directory = Paths.get(dir);
         Objects.requireNonNull(directory, "directory must not be null");
         if (!Files.isDirectory(directory) || !Files.isWritable(directory)) {
