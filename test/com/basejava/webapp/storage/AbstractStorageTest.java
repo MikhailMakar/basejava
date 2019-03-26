@@ -10,10 +10,27 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.basejava.webapp.ResumeTestData.*;
+import static com.basejava.webapp.ResumeTestData.getWholeResume;
 import static org.junit.Assert.assertEquals;
 
 public class AbstractStorageTest {
+
+    private static final String UUID_1 = "uuid1";
+    private static final String UUID_2 = "uuid2";
+    private static final String UUID_3 = "uuid3";
+    private static final String UUID_4 = "uuid4";
+
+    private static final Resume R1;
+    private static final Resume R2;
+    private static final Resume R3;
+    private static final Resume R4;
+
+    static {
+        R1 = getWholeResume(UUID_1, "Name1");
+        R2 = getWholeResume(UUID_2, "Name2");
+        R3 = getWholeResume(UUID_3, "Name3");
+        R4 = getWholeResume(UUID_4, "Name4");
+    }
 
     protected static final File STORAGE_DIR = new File("C:\\JavaRushTasks\\basejava\\storage");
 
